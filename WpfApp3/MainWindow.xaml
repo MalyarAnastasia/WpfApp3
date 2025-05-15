@@ -3,39 +3,57 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:oxy="http://oxyplot.org/wpf"
         Title="HTTP Monitoring App" Height="600" Width="800">
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
 
-        <!-- Server Section -->
-        <StackPanel Grid.Column="0" Margin="10">
-            <Label Content="Server Port:"/>
-            <TextBox x:Name="ServerPortTextBox" Text="8080"/>
-            <Button x:Name="StartServerButton" Content="Start Server" Click="StartServerButton_Click"/>
-            <Label Content="Server Logs:"/>
-            <TextBox x:Name="ServerLogsTextBox" AcceptsReturn="True" VerticalScrollBarVisibility="Auto"/>
-            <Label Content="Server Statistics:"/>
-            <DataGrid x:Name="ServerStatisticsDataGrid" AutoGenerateColumns="True" Height="100"/>
-            <Label Content="Request Load Graph:"/>
-            <oxy:PlotView x:Name="RequestLoadPlot" Width="300" Height="200"/>
-        </StackPanel>
+            <!-- Server Section -->
+            <StackPanel Grid.Column="0" Margin="10">
+                <Label Content="Server Port:"/>
+                <TextBox x:Name="ServerPortTextBox" Text="8080"/>
+                <Button x:Name="StartServerButton" Content="Start Server" Click="StartServerButton_Click"/>
+                <Label Content="Log Filters:"/>
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Method:"/>
+                    <ComboBox x:Name="LogFilterMethodComboBox" Width="80">
+                        <ComboBoxItem Content="All"/>
+                        <ComboBoxItem Content="GET"/>
+                        <ComboBoxItem Content="POST"/>
+                    </ComboBox>
+                    <Label Content="Status:"/>
+                    <ComboBox x:Name="LogFilterStatusComboBox" Width="80">
+                        <ComboBoxItem Content="All"/>
+                        <ComboBoxItem Content="OK"/>
+                        <ComboBoxItem Content="BadRequest"/>
+                        <ComboBoxItem Content="InternalServerError"/>
+                    </ComboBox>
+                </StackPanel>
+                <Label Content="Server Logs:"/>
+                <TextBox x:Name="ServerLogsTextBox" AcceptsReturn="True" VerticalScrollBarVisibility="Auto"/>
+                <Label Content="Server Statistics:"/>
+                <DataGrid x:Name="ServerStatisticsDataGrid" AutoGenerateColumns="True" Height="100"/>
+                <Label Content="Request Load Graph (Requests per Minute):"/>
+                <oxy:PlotView x:Name="RequestLoadPlot" Width="300" Height="200"/>
+            </StackPanel>
 
-        <!-- Client Section -->
-        <StackPanel Grid.Column="1" Margin="10">
-            <Label Content="Request URL:"/>
-            <TextBox x:Name="RequestUrlTextBox" Text="https://jsonplaceholder.typicode.com/posts/1"/>
-            <Label Content="Request Method:"/>
-            <ComboBox x:Name="RequestMethodComboBox">
-                <ComboBoxItem Content="GET"/>
-                <ComboBoxItem Content="POST"/>
-            </ComboBox>
-            <Label Content="Request Body (JSON):"/>
-            <TextBox x:Name="RequestBodyTextBox" AcceptsReturn="True" VerticalScrollBarVisibility="Auto"/>
-            <Button x:Name="SendRequestButton" Content="Send Request" Click="SendRequestButton_Click"/>
-            <Label Content="Response:"/>
-            <TextBox x:Name="ResponseTextBox" AcceptsReturn="True" VerticalScrollBarVisibility="Auto"/>
-        </StackPanel>
-    </Grid>
+            <!-- Client Section -->
+            <StackPanel Grid.Column="1" Margin="10">
+                <Label Content="Request URL:"/>
+                <TextBox x:Name="RequestUrlTextBox" Text="http://localhost:8080/"/>
+                <Label Content="Request Method:"/>
+                <ComboBox x:Name="RequestMethodComboBox">
+                    <ComboBoxItem Content="GET"/>
+                    <ComboBoxItem Content="POST"/>
+                </ComboBox>
+                <Label Content="Request Body (JSON):"/>
+                <TextBox x:Name="RequestBodyTextBox" AcceptsReturn="True" VerticalScrollBarVisibility="Auto"/>
+                <Button x:Name="SendRequestButton" Content="Send Request" Click="SendRequestButton_Click"/>
+                <Label Content="Response:"/>
+                <TextBox x:Name="ResponseTextBox" AcceptsReturn="True" VerticalScrollBarVisibility="Auto"/>
+            </StackPanel>
+        </Grid>
+    </ScrollViewer>
 </Window>
